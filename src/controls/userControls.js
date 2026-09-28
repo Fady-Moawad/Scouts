@@ -296,6 +296,8 @@ const completeData = async (req, res) => {
 
 const dashboard = async (req, res) => {
   try {
+    console.log('test');
+    
     const all = await User.countDocuments()
     const startOfDay = new Date();
     startOfDay.setHours(0, 0, 0, 0);
