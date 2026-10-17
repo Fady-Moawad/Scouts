@@ -22,6 +22,7 @@ const userById = async (req, res) => {
 
 const allUsers = async (req, res) => {
   try {
+    
     const users = await User.find()
 
     return res.status(201).json({

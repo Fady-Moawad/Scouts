@@ -15,7 +15,13 @@ app.use(helmet())
 connectionDB()
 PORT = process.env.PORT
 
+
 app.use(express.json())
+app.get('/',(req,res)=>{
+return res.json({'health':'live',
+    'PORT':process.env.PORT
+})
+})
 app.use('/api/user', routes)
 app.use(notFound)
 app.use(errorHandler)
