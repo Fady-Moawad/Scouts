@@ -12,20 +12,33 @@ const app = express()
 app.use(cors())
 app.use(helmet())
 
-connectionDB()
+
 const PORT = process.env.PORT || 3000;
 
+app.use(express.json());
+app.use(morgan('dev'));
 
-app.use(express.json())
-app.get('/',(req,res)=>{
-return res.json({'health':'live',
-    'PORT':process.env.PORT
-})
-})
-app.use('/api/user', routes)
-app.use(notFound)
-app.use(errorHandler)
+app.get('/', (req, res) => {
+    res.status(200).json({
+        health: 'live'
+    });
+});
 
-app.listen(PORT, () => {
-    console.log(`lsiten in PORT: ${PORT}`);
-})
+app.use('/api/user', routes);
+app.use(notFound);
+app.use(errorHandler);
+
+async function startServer() {
+    try {
+        await connectionDB();
+
+        app.listen(PORT, '0.0.0.0', () => {
+            console.log(`Server listening on port ${PORT}`);
+        });
+    } catch (error) {
+        console.error('Startup error:', error.message);
+        process.exit(1);
+    }
+}
+
+startServer();
