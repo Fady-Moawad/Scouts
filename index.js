@@ -13,7 +13,7 @@ app.use(cors())
 app.use(helmet())
 
 connectionDB()
-PORT = process.env.PORT
+const PORT = process.env.PORT || 3000;
 
 
 app.use(express.json())
